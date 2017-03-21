@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -60,5 +62,9 @@ public class DefaultDatasource implements DataSource {
 	public Connection getConnection(String username, String password) throws SQLException {
 		return DriverManager.getConnection(url, username, password);
 	}
-
+	
+	//don't add @Override here to avoid issue on java 6 compilation this method is present to be able to use the class on JRE >= 7 
+	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+		throw new UnsupportedOperationException();
+	}
 }
